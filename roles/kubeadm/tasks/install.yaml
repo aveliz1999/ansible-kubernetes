@@ -1,0 +1,18 @@
+---
+- name: Add gpg key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add apt source
+  copy:
+    src: apt-source
+    dest: /etc/apt/sources.list.d/kubernetes.list
+
+- name: Install kubeadm kubelet kubectl
+  apt:
+    update_cache: yes
+    pkg:
+      - kubelet
+      - kubeadm
+      - kubectl

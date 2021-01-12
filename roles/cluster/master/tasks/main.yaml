@@ -1,0 +1,19 @@
+---
+- name: Check cluster status
+  shell: ". ~/.bashrc && kubectl cluster-info"
+  register: cluster_status
+  ignore_errors: yes
+
+- name: Create cluster
+  when: cluster_status.rc == 1
+  include_tasks: create.yaml
+
+- name: Get kubeadm token
+  when: cluster_status.rc == 0
+  shell: "kubeadm token list | awk 'NR>1 {print $1}'"
+  register: kubeadm_token_result
+
+- name: Register token from existing cluster
+  when: cluster_status.rc == 0
+  set_fact:
+    kubeadm_token: "{{ kubeadm_token_result.stdout }}"

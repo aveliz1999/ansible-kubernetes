@@ -1,0 +1,23 @@
+- hosts: cluster
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: docker }
+
+- hosts: cluster
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: kubeadm }
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+   - { role: cluster/master }
+
+- hosts: node
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: cluster/node }

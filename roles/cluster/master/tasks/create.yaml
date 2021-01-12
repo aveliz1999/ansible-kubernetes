@@ -1,0 +1,14 @@
+---
+- name: Create kubeadm token
+  shell: "tr -dc a-z0-9 </dev/urandom | head -c 6 ; printf '.'; tr -dc a-z0-9 </dev/urandom | head -c 16"
+  register: kubeadm_token_result
+
+- name: Register kubeadm token
+  set_fact:
+    kubeadm_token: "{{ kubeadm_token_result.stdout }}"
+
+- name: Create cluster
+  shell: kubeadm init --pod-network-cidr "10.42.0.0/12" --service-cidr "10.96.0.0/12" --token {{ kubeadm_token }}
+
+- name: Add KUBECONFIG to bashrc
+  shell: export KUBECONFIG=/etc/kuberntes/admin.conf && echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> ~/.bashrc

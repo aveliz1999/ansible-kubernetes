@@ -1,0 +1,9 @@
+---
+- name: Iptables config
+  include_tasks: iptables.yaml
+
+- name: Install
+  include_tasks: install.yaml
+
+- name: Disable swap
+  include_tasks: swap.yaml

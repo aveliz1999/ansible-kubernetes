@@ -1,0 +1,6 @@
+---
+- name: Disable swap
+  shell: swapoff -a
+
+- name: Disable swap in fstab
+  shell: sed -i '/\sswap\s/ s/^/#/' /etc/fstab
