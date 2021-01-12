@@ -1,0 +1,17 @@
+---
+- name: Install Tigera Operator
+  shell: ". ~/.bashrc && kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml"
+
+- name: Download Calico installation resource
+  get_url:
+    url: https://docs.projectcalico.org/manifests/custom-resources.yaml
+    dest: /tmp/calico-install.yaml
+
+- name: Replace pod network cidr in Calico install
+  lineinfile:
+    path: /tmp/calico-install.yaml
+    regexp: 'cidr: 192\.168\.0\.0\/16'
+    line: "      cidr: {{ pod_network_cidr }}"
+
+- name: Install Calico
+  shell: ". ~/.bashrc && kubectl create -f /tmp/calico-install.yaml"
