@@ -41,3 +41,9 @@
   systemd:
     name: docker
     enabled: yes
+
+- name: Restart docker service
+  systemd:
+    name: docker
+    state: restarted
+    daemon_reload: yes
