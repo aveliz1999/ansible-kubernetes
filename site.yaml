@@ -33,3 +33,9 @@
   become: yes
   roles:
     - { role: metallb }
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: ingress-controller }

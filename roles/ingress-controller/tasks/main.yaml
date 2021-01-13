@@ -1,0 +1,8 @@
+---
+- name: Copy deployment configuration
+  copy:
+    src: deploy.yaml
+    dest: /tmp/deploy.yaml
+
+- name: Deploy Nginx Ingress Controller
+  shell: . ~/.bashrc && kubectl apply -f /tmp/deploy.yaml
