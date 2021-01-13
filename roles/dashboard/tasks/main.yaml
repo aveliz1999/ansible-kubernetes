@@ -1,0 +1,14 @@
+---
+- name: Install dashboard
+  shell: . ~/.bashrc && kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml
+
+- name: Copy configuration files
+  copy:
+    src: ./
+    dest: /tmp/
+
+- name: Create admin user
+  shell: . ~/.bashrc && kubectl apply -f /tmp/createAdminUser.yaml
+
+- name: Create cluster role binding
+  shell: . ~/.bashrc && kubectl apply -f /tmp/createClusterRoleBinding.yaml

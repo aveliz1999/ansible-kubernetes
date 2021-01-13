@@ -45,3 +45,9 @@
   become: yes
   roles:
     - { role: metrics }
+    
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: dashboard }
