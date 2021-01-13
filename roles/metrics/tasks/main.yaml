@@ -1,3 +1,8 @@
 ---
+- name: Copy configuration file
+  copy:
+    src: metrics.yaml
+    dest: /tmp/metrics.yaml
+
 - name: Install metrics-server
-  shell: . ~/.bashrc && kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+  shell: . ~/.bashrc && kubectl apply -f /tmp/metrics.yaml
