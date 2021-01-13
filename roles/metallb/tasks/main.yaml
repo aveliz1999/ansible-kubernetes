@@ -1,0 +1,6 @@
+---
+- name: Install metallb
+  include_tasks: install.yaml
+
+- name: Configure metallb
+  include_tasks: configure.yaml

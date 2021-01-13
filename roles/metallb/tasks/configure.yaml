@@ -1,0 +1,17 @@
+---
+- name: Create memberlist secret
+  shell: . ~/.bashrc && kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+- name: Copy configuration
+  copy:
+    src: configuration.yaml
+    dest: /tmp/configuration.yaml
+
+- name: Replace ip block
+  lineinfile:
+    path: /tmp/configuration.yaml
+    regexp: REPLACEME_ADDRESSES
+    line: "      - {{ metallb_ip_range }}"
+
+- name: Create ConfigMap
+  shell: . ~/.bashrc && kubectl create -f /tmp/configuration.yaml

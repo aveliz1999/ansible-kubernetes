@@ -27,3 +27,9 @@
   become: yes
   roles:
     - { role: calico }
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: metallb }
