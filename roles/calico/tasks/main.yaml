@@ -15,3 +15,6 @@
 
 - name: Install Calico
   shell: ". ~/.bashrc && kubectl create -f /tmp/calico-install.yaml"
+
+- name: Wait for nodes to become ready
+  shell: . ~/.bashrc && kubectl wait --for=condition=Ready nodes --all --timeout=300s
