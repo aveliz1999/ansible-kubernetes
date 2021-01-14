@@ -1,0 +1,20 @@
+---
+- name: Install cert-manager
+  shell: . ~/.bashrc && kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
+
+- name: Wait for pods to become ready
+  shell: . ~/.bashrc && kubectl wait --for=condition=ready pods -n cert-manager --timeout=300s --all
+
+- name: Copy cluster issuer config
+  copy:
+    src: issuer.yaml
+    dest: /tmp/issuer.yaml
+
+- name: Replace correct email in issuer config
+  lineinfile:
+    path: /tmp/issuer.yaml
+    regexp: REPLACEME_EMAIL
+    line: "    email: {{ letsencrypt_email }}"
+
+- name: Install production cluster issuer
+  shell: . ~/.bashrc && kubectl apply -f /tmp/issuer.yaml

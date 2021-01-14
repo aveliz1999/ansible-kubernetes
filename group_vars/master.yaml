@@ -2,3 +2,4 @@ reset_if_present: false
 pod_network_cidr: "10.42.0.0/12"
 service_cidr: "10.96.0.0/12"
 metallb_ip_range: 192.168.1.245-192.168.1.253
+letsencrypt_email: email@example.com

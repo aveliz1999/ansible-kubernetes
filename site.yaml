@@ -51,3 +51,9 @@
   become: yes
   roles:
     - { role: dashboard }
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: cert-manager }
